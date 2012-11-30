@@ -8,7 +8,7 @@ This plugin provides two functions called #massAssign to your models. One static
 npm install mongoose-mass-assign
 ```
 
-Current version 0.2.2
+Current version 0.2.3
 
 ## Usage
 
