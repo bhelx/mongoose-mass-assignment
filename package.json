@@ -6,6 +6,10 @@
   "contributors": [
     "Joel Wietelmann <jwietelmann@gmail.com>"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bhelx/mongoose-mass-assignment"
+  },
   "dependencies": {
     "mongoose": "3.x.x"
   },
