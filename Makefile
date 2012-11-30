@@ -1,2 +1,2 @@
 test:
-	@NODE_ENV=test mocha -R nyan -t 3000 test.js
+	@NODE_ENV=test mocha -R spec -t 3000 test.js

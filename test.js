@@ -37,7 +37,7 @@ describe('Mongoose Mass Assignment', function () {
 
   describe('model#massAssign', function () {
 
-    it('should build a user ignoring any input regarding admin', function () {
+    it('should build a user ignoring any input regarding admin and verified', function () {
       var user = new User();
 
       user.massAssign({
