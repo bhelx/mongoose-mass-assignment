@@ -1,7 +1,7 @@
 ## Install
 
 ```
-npm install mongoose-mass-assignment
+npm install mongoose-mass-assign
 ```
 
 Current version 0.2.0
@@ -11,7 +11,7 @@ Current version 0.2.0
 An example
 
 ```
-var massAssign = require('mongoose-mass-assignment');
+var massAssign = require('mongoose-mass-assign');
 
 var UserSchema = new mongoose.Schema({
   name      : String,
