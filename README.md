@@ -40,7 +40,7 @@ var user = User.massAssign({
   admin: true
 });
 
-// user => { name: 'bhelx', admin: 'false' }
+// user => { name: 'bhelx', admin: false, verified: false }
 
 /** Instance method, useful for updating  **/
 var user = new User;
@@ -50,7 +50,7 @@ user.massAssign({
   admin: true
 });
 
-// user => { name: 'bhelx', admin: 'false' }
+// user => { name: 'bhelx', admin: false, verified: false }
 
 ```
 For more details see test.js
