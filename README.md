@@ -10,7 +10,7 @@ Current version 0.2.1
 
 An example
 
-```
+```js
 var massAssign = require('mongoose-mass-assign');
 
 var UserSchema = new mongoose.Schema({
@@ -36,5 +36,4 @@ npm install
 ```
 make test
 ```
-
 
