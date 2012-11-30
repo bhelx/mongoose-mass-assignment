@@ -4,7 +4,7 @@
 npm install mongoose-mass-assign
 ```
 
-Current version 0.2.0
+Current version 0.2.1
 
 ## Usage
 
