@@ -9,8 +9,5 @@
   "devDependencies": {
     "mocha": "*",
     "should": "*"
-  },
-  "scripts": {
-    "test": "make test-all"
   }
 }
