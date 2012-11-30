@@ -4,8 +4,7 @@
   "author": "Benjamin Eckel <bhelx@freenode>",
   "description": "a mongoose plugin to help safely perform mass assignments from web input",
   "dependencies": {
-    "mongoose": "3.x.x",
-    "underscore": "1.4.x"
+    "mongoose": "3.x.x"
   },
   "devDependencies": {
     "mocha": "*",
