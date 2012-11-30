@@ -1,3 +1,11 @@
+## Install
+
+```
+npm install mongoose-mass-assignment
+```
+
+Current version 0.2.0
+
 ## Usage
 
 An example
