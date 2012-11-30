@@ -1,0 +1,8 @@
+
+## Testing
+
+```
+make test
+```
+
+
