@@ -12,7 +12,7 @@ Current version 0.2.1
 
 ## Usage
 
-An example
+Defining:
 
 ```js
 var massAssign = require('mongoose-mass-assign');
@@ -29,6 +29,30 @@ var User = mongoose.model('User', UserSchema);
 
 ```
 
+Using:
+
+```js
+
+/** Static method, useful for creation **/
+
+var user = User.massAssign({
+  name: 'bhelx',
+  admin: true
+});
+
+// user => { name: 'bhelx', admin: 'false' }
+
+/** Instance method, useful for updating  **/
+var user = new User;
+
+user.massAssign({
+  name: 'bhelx',
+  admin: true
+});
+
+// user => { name: 'bhelx', admin: 'false' }
+
+```
 For more details see test.js
 
 ## Testing
