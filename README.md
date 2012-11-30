@@ -1,3 +1,7 @@
+## mongoose-mass-assign
+
+This plugin provides two functions called #massAssign on your models. One static and one instance. You can use these to protect specific fields from web input. The plugin adds the schematype option 'protect' so you don't have to write any filtering code.
+
 ## Install
 
 ```
