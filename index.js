@@ -17,23 +17,20 @@ var omit = function (obj) {
 
 /** end underscore */
 
-module.exports = function (mongoose) {
+module.exports = function (schema, options) {
 
-  mongoose.Schema.prototype.protectedFields = function () {
-    var protectedFields = [];
-    for (var k in this.tree){
-      if (this.tree[k].protect){
-        protectedFields.push(k);
-      }
+  var protectedFields = [];
+  for (var k in schema.tree){
+    if (schema.tree[k].protect){
+      protectedFields.push(k);
     }
-    return protectedFields;
-  };
-
-  mongoose.Model.prototype.massAssign = function (body) {
-    return this.set(omit(body, this.schema.protectedFields()));
   }
 
-  mongoose.Model.massAssign = function (body) {
+  schema.methods.massAssign = function (body) {
+    return this.set(omit(body, protectedFields));
+  }
+
+  schema.statics.massAssign = function (body) {
     var obj = new this();
     return obj.massAssign(body);
   };

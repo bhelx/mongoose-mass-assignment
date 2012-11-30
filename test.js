@@ -1,5 +1,5 @@
 var mongoose    = require('mongoose')
-  , massAssign  = require('./')(mongoose)
+  , massAssign  = require('./')
   , should      = require('should')
   ;
 
@@ -14,21 +14,9 @@ describe('Mongoose Mass Assignment', function () {
       verified  : { type: Boolean, protect: true, default: false }
     });
 
+    UserSchema.plugin(massAssign);
+
     User = mongoose.model('User', UserSchema);
-  });
-
-  describe('#protectedFields', function () {
-
-    it('should have given us a protectedFields method on Schema', function () {
-      should.exist(User.schema.protectedFields);
-    });
-
-    it('should find "admin" and "verified" as protected fields', function () {
-      User.schema.protectedFields().should.include('admin');
-      User.schema.protectedFields().should.include('verified');
-      User.schema.protectedFields().should.not.include('name');
-    });
-
   });
 
   describe('Model#massAssign', function () {

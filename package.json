@@ -1,8 +1,8 @@
 {
   "name": "mongoose-mass-assign",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Benjamin Eckel <bhelx@freenode>",
-  "description": "a mongoose plugin to help safely perform mass assignments from web input",
+  "description": "A mongoose plugin to help safely perform mass assignments from web input",
   "dependencies": {
     "mongoose": "3.x.x"
   },
