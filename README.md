@@ -10,7 +10,7 @@ You can also get direct access to the filtering mechanism through the static mas
 npm install mongoose-mass-assign
 ```
 
-Current version 0.2.3
+Current version 0.3.0
 
 ## Usage
 
