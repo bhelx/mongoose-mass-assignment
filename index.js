@@ -1,13 +1,32 @@
-module.exports = function(schema, options) {
-  schema.method('massAssign', function(fields) {
-    for(var i in schema.tree) {
-      if(schema.tree[i].protect || fields[i] == null) continue;
-      this[i] = fields[i];
+var mongoose = require('mongoose');
+
+module.exports = function (schema, options) {
+
+  schema.static('massUpdate', function (fields) {
+    var tree = this.schema.tree;
+
+    for (var k in tree) {
+      if (tree[k].protect) {
+        delete fields[k];
+      }
     }
+
+    return fields;
   });
-  schema.static('massAssign', function(fields) {
+
+  schema.method('massAssign', function (fields) {
+    var safeFields = this.constructor.massUpdate(fields);
+
+    this.set(safeFields);
+
+    return this;
+  });
+
+  schema.static('massAssign', function (fields) {
     var model = new this();
+
     model.massAssign(fields);
+
     return model;
   });
 };

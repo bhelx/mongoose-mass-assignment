@@ -19,6 +19,22 @@ describe('Mongoose Mass Assignment', function () {
     User = mongoose.model('User', UserSchema);
   });
 
+  describe('Model#massUpdate', function () {
+
+    it('should fiilter out the protected fields admin and verified', function () {
+      var userFields = User.massUpdate({
+        name     : 'bhelx',
+        admin    : true,
+        verified : true
+      });
+
+      userFields.should.include({ name: 'bhelx' });
+      userFields.should.not.include({ admin: true });
+      userFields.should.not.include({ verified: true });
+    });
+
+  });
+
   describe('Model#massAssign', function () {
 
     it('should build a user ignoring any input regarding admin and verified', function () {
