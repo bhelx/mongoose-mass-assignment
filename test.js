@@ -13,7 +13,13 @@ describe('Mongoose Mass Assignment', function () {
       admin     : { type: Boolean, protect: true, default: false },
       verified  : { type: Boolean, protect: true, default: false },
       nested:{
-          name:{type:String}
+          name:{type:String},
+          child:{type:Boolean,protect:true},
+          protectedData:{
+              steveJobs:{type:Boolean,protect:true},
+              sergeyBrin:{type:Boolean,protect:true},
+              commonPerson:{type:Boolean}
+          }
       }
     });
 
@@ -30,15 +36,27 @@ describe('Mongoose Mass Assignment', function () {
           admin    : true,
           verified : true,
           nested:{
-              name:"testName"
+              name:"testName",
+              child:true,
+              protectedData:{
+                 steveJobs:true,
+                 sergeyBrin:true,
+                 commonPerson:true
+              },
+              dataShouldNotBeInSchema:"any data"
           }
       }
       var userFields = User.massUpdate(initialData);
 
       userFields.should.include({ name: 'bhelx' });
-      userFields.should.include({ nested:{name:"testName"} }) //test our recursive copy
+      userFields.nested.should.include({name:"testName" }) //test our recursive copy
       userFields.should.not.include({ admin: true });
       userFields.should.not.include({ verified: true });
+      userFields.nested.should.not.include({child:true});
+      userFields.nested.protectedData.should.not.include({steveJobs:true});
+      userFields.nested.protectedData.should.not.include({sergeyBrin:true});
+      userFields.nested.protectedData.should.include({commonPerson:true});
+      userFields.nested.should.not.include({dataShouldNotBeInSchema:"any data"});
 
       //test that inital object didnt change
       initialData.should.include({ admin:true })

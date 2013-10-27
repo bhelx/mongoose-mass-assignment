@@ -1,36 +1,16 @@
 var mongoose = require('mongoose');
 
-__copy = function(initialObject){
-
-    var newObject = {}
-    var copy = function(obj1,obj2){
-        for (var key in obj1){
-            obj2[key] = obj1[key]
-            if (typeof obj1[key]=='object'){
-                copy(obj1[key],obj2[key])
-            }
-        }
-    }
-    copy(initialObject,newObject)
-    return newObject
-
-}
-
-
+var helpers = require('./helpers')
 
 module.exports = function (schema, options) {
 
   schema.static('massUpdate', function (fields) {
-    var copiedFields = __copy(fields)
+    var copiedFields = helpers.copy(fields)
 
     console.log("copied fields",copiedFields)
     var tree = this.schema.tree;
 
-    for (var k in tree) {
-      if (tree[k].protect) {
-        delete copiedFields[k];
-      }
-    }
+    copiedFields = helpers.excludeProtectedFields(tree,copiedFields)
 
     return copiedFields;
   });
