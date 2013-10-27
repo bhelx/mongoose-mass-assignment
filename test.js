@@ -11,7 +11,10 @@ describe('Mongoose Mass Assignment', function () {
     var UserSchema = new mongoose.Schema({
       name      : String,
       admin     : { type: Boolean, protect: true, default: false },
-      verified  : { type: Boolean, protect: true, default: false }
+      verified  : { type: Boolean, protect: true, default: false },
+      nested:{
+          name:{type:String}
+      }
     });
 
     UserSchema.plugin(massAssign);
@@ -22,15 +25,25 @@ describe('Mongoose Mass Assignment', function () {
   describe('Model#massUpdate', function () {
 
     it('should fiilter out the protected fields admin and verified', function () {
-      var userFields = User.massUpdate({
-        name     : 'bhelx',
-        admin    : true,
-        verified : true
-      });
+      var initialData =  {
+          name     : 'bhelx',
+          admin    : true,
+          verified : true,
+          nested:{
+              name:"testName"
+          }
+      }
+      var userFields = User.massUpdate(initialData);
 
       userFields.should.include({ name: 'bhelx' });
+      userFields.should.include({ nested:{name:"testName"} }) //test our recursive copy
       userFields.should.not.include({ admin: true });
       userFields.should.not.include({ verified: true });
+
+      //test that inital object didnt change
+      initialData.should.include({ admin:true })
+      initialData.should.include({ verified:true })
+
     });
 
   });
