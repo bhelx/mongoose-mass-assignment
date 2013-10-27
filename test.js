@@ -20,7 +20,13 @@ describe('Mongoose Mass Assignment', function () {
               sergeyBrin:{type:Boolean,protect:true},
               commonPerson:{type:Boolean}
           }
-      }
+      },
+      nestedArray:[{
+                                        protectedField:{type:Boolean,protect:true},
+                                        freeField:{type:Boolean}
+                                       }]
+      ,
+      notArrayProperty:{type:"string"}
     });
 
     UserSchema.plugin(massAssign);
@@ -44,7 +50,14 @@ describe('Mongoose Mass Assignment', function () {
                  commonPerson:true
               },
               dataShouldNotBeInSchema:"any data"
-          }
+          },
+          nestedArray:[
+              {
+                  protectedField:true,
+                  freeField:true
+              }
+          ],
+          notArrayProperty:["one","two","three"]
       }
       var userFields = User.massUpdate(initialData);
 
@@ -57,6 +70,9 @@ describe('Mongoose Mass Assignment', function () {
       userFields.nested.protectedData.should.not.include({sergeyBrin:true});
       userFields.nested.protectedData.should.include({commonPerson:true});
       userFields.nested.should.not.include({dataShouldNotBeInSchema:"any data"});
+      userFields.nestedArray[0].should.include({freeField:true});
+      userFields.nestedArray[0].should.not.include({protectedField:true});
+      userFields.should.not.include('notArrayProperty');
 
       //test that inital object didnt change
       initialData.should.include({ admin:true })

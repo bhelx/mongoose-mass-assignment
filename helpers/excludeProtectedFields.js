@@ -6,32 +6,46 @@ var deepPath =  function(obj, path){
 };
 
 module.exports = function(mongooseModelTree,copiedData){
-    console.log("mongoose nested path name child",mongooseModelTree['nested']['child'])
-    console.log("mongoose nested path",mongooseModelTree['verified'])
+
     var __excludeProtected = function(path,object){
 
         for (var property in object){
 
             var combinedPath =(path!=null && path!=undefined)? path+"."+property :property
-            console.log("path:",combinedPath)
             var mongooseField = deepPath(mongooseModelTree,combinedPath)
-            if (mongooseField && mongooseField.protect){   //check and delete.
-                 console.log("deleting property:",property)
+
+            if(!mongooseField){  // mongoose does allow writing any data non-related to objects in nested schemas. we don't
+                delete object[property]
+            }
+            else if(object[property] instanceof Array){  //if array, do nested search for array
+
+                //double check path
+                var mongooseArraySchema =deepPath(mongooseModelTree,combinedPath);
+
+                if(!(mongooseArraySchema instanceof Array)){
+                    //nested array schema can be defined 2 ways - by [] or {items:[]}. lets check if it will work with items
+                    mongooseArraySchema = deepPath(mongooseModelTree,combinedPath+".items");
+                }
+                if(!(mongooseArraySchema instanceof Array)){
+                    //not valid schema, should delete
+                    delete object[property];
+                }
+                else {
+                    combinedPath +=".0"
+                    for(var i =0;i<object[property].length;i++){
+                        __excludeProtected(combinedPath,object[property][i])
+                    }
+                }
+
+            }
+            else if (mongooseField && mongooseField.protect){   //check and delete protected fields.
                  delete object[property]
             }
             else if (typeof object[property]=="object"){  //if object, do nested search
-                console.log("nested path",property)
                 __excludeProtected(combinedPath,object[property])
             }
-            else if(typeof object[property]=="array" || typeof object[property].items=="array"){  //if array, do nested search for array
-                 //todo: array protected
-            }
-            else if(!mongooseField){  // mongoose does allow writing any data non-related to schema in nested objects. we don't
-                 console.log("no mongoose field at path:",combinedPath)
-                 delete object[property]
-            }
             else{
-                console.log("no action for:",combinedPath)
+                //test no action.do nothing. ccompletely nothing
             }
         }
     }

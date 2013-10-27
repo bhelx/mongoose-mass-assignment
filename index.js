@@ -6,8 +6,6 @@ module.exports = function (schema, options) {
 
   schema.static('massUpdate', function (fields) {
     var copiedFields = helpers.copy(fields)
-
-    console.log("copied fields",copiedFields)
     var tree = this.schema.tree;
 
     copiedFields = helpers.excludeProtectedFields(tree,copiedFields)
