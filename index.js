@@ -1,17 +1,16 @@
 var mongoose = require('mongoose');
 
+var helpers = require('./helpers')
+
 module.exports = function (schema, options) {
 
   schema.static('massUpdate', function (fields) {
+    var copiedFields = helpers.copy(fields)
     var tree = this.schema.tree;
 
-    for (var k in tree) {
-      if (tree[k].protect) {
-        delete fields[k];
-      }
-    }
+    copiedFields = helpers.excludeProtectedFields(tree,copiedFields)
 
-    return fields;
+    return copiedFields;
   });
 
   schema.method('massAssign', function (fields) {
