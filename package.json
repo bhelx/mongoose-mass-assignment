@@ -12,7 +12,7 @@
     "url": "https://github.com/bhelx/mongoose-mass-assignment"
   },
   "dependencies": {
-    "mongoose": "3.x.x"
+    "mongoose": "4.x.x"
   },
   "devDependencies": {
     "mocha": "*",
